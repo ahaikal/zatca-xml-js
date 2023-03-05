@@ -7,7 +7,7 @@
 
 import { spawn } from "child_process";
 import { v4 as uuidv4 } from 'uuid';
-import fs from "fs";
+// import fs from "fs";
 
 import defaultCSRConfig from "../templates/csr_template";
 import API from "../api";
@@ -76,46 +76,47 @@ const generateSecp256k1KeyPair = async (): Promise<string> => {
     }
 }
 
+// WE WILL NOT GENERATE CSR ON TABLET
 // Generate a signed ecdsaWithSHA256 CSR
 // 2.2.2 Profile specification of the Cryptographic Stamp identifiers. & CSR field contents / RDNs.
 const generateCSR = async (egs_info: EGSUnitInfo, production: boolean, solution_name: string): Promise<string> => {
-    if (!egs_info.private_key) throw new Error("EGS has no private key");
+    // if (!egs_info.private_key) throw new Error("EGS has no private key");
 
-    // This creates a temporary private file, and csr config file to pass to OpenSSL in order to create and sign the CSR.
-    // * In terms of security, this is very bad as /tmp can be accessed by all users. a simple watcher by unauthorized user can retrieve the keys.
-    // Better change it to some protected dir.
-    const private_key_file = `${process.env.TEMP_FOLDER ?? "/tmp/"}${uuidv4()}.pem`;
-    const csr_config_file = `${process.env.TEMP_FOLDER ?? "/tmp/"}${uuidv4()}.cnf`;
-    fs.writeFileSync(private_key_file, egs_info.private_key);
-    fs.writeFileSync(csr_config_file, defaultCSRConfig({
-        egs_model: egs_info.model,
-        egs_serial_number: egs_info.uuid,
-        solution_name: solution_name,
-        vat_number: egs_info.VAT_number,
-        branch_location: `${egs_info.location.building} ${egs_info.location.street}, ${egs_info.location.city}`,
-        branch_industry: egs_info.branch_industry,
-        branch_name: egs_info.branch_name,
-        taxpayer_name: egs_info.VAT_name,
-        taxpayer_provided_id: egs_info.custom_id,
-        production: production
-    }));
+    // // This creates a temporary private file, and csr config file to pass to OpenSSL in order to create and sign the CSR.
+    // // * In terms of security, this is very bad as /tmp can be accessed by all users. a simple watcher by unauthorized user can retrieve the keys.
+    // // Better change it to some protected dir.
+    // const private_key_file = `${process.env.TEMP_FOLDER ?? "/tmp/"}${uuidv4()}.pem`;
+    // const csr_config_file = `${process.env.TEMP_FOLDER ?? "/tmp/"}${uuidv4()}.cnf`;
+    // fs.writeFileSync(private_key_file, egs_info.private_key);
+    // fs.writeFileSync(csr_config_file, defaultCSRConfig({
+    //     egs_model: egs_info.model,
+    //     egs_serial_number: egs_info.uuid,
+    //     solution_name: solution_name,
+    //     vat_number: egs_info.VAT_number,
+    //     branch_location: `${egs_info.location.building} ${egs_info.location.street}, ${egs_info.location.city}`,
+    //     branch_industry: egs_info.branch_industry,
+    //     branch_name: egs_info.branch_name,
+    //     taxpayer_name: egs_info.VAT_name,
+    //     taxpayer_provided_id: egs_info.custom_id,
+    //     production: production
+    // }));
     
-    const cleanUp = () => {
-        fs.unlink(private_key_file, ()=>{});
-        fs.unlink(csr_config_file, ()=>{});
-    };
+    // const cleanUp = () => {
+    //     fs.unlink(private_key_file, ()=>{});
+    //     fs.unlink(csr_config_file, ()=>{});
+    // };
     
-    try {    
-        const result = await OpenSSL(["req", "-new", "-sha256", "-key", private_key_file, "-config", csr_config_file]);
-        if (!result.includes("-----BEGIN CERTIFICATE REQUEST-----")) throw new Error("Error no CSR found in OpenSSL output.");
+    // try {    
+    //     const result = await OpenSSL(["req", "-new", "-sha256", "-key", private_key_file, "-config", csr_config_file]);
+    //     if (!result.includes("-----BEGIN CERTIFICATE REQUEST-----")) throw new Error("Error no CSR found in OpenSSL output.");
 
-        let csr: string = `-----BEGIN CERTIFICATE REQUEST-----${result.split("-----BEGIN CERTIFICATE REQUEST-----")[1]}`.trim();
-        cleanUp();
-        return csr;
-    } catch (error) {
-        cleanUp();
-        throw error;
-    }
+    //     let csr: string = `-----BEGIN CERTIFICATE REQUEST-----${result.split("-----BEGIN CERTIFICATE REQUEST-----")[1]}`.trim();
+    //     cleanUp();
+    //     return csr;
+    // } catch (error) {
+    //     cleanUp();
+    //     throw error;
+    // }
 }
 
 

@@ -1,6 +1,6 @@
 {
   "name": "zatca-xml-js",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "An implementation of Saudi Arabia ZATCA's E-Invoicing requirements, processes, and standards.",
   "main": "lib/index.js",
   "files": [
@@ -21,10 +21,13 @@
   },
   "dependencies": {
     "@fidm/x509": "^1.2.1",
+    "@peculiar/webcrypto": "^1.4.1",
+    "@peculiar/x509": "^1.9.3",
     "axios": "^0.27.2",
     "fast-xml-parser": "^4.0.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
+    "tsc": "^2.0.4",
     "uuid": "^9.0.0",
     "xmldom": "^0.6.0",
     "xmldsigjs": "^2.5.0"

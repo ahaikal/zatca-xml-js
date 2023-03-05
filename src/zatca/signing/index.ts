@@ -10,6 +10,9 @@ import { generateQR } from "../qr";
 import defaultUBLExtensions from "../templates/ubl_sign_extension_template";
 import defaultUBLExtensionsSignedProperties, {defaultUBLExtensionsSignedPropertiesForSigning} from "../templates/ubl_extension_signed_properties_template";
 import { log } from "../../logger";
+const x509 = require("@peculiar/x509");
+const { Crypto } = require("@peculiar/webcrypto");
+x509.cryptoProvider.set(Crypto);
 
 /**
  * Removes (UBLExtensions (Signing), Signature Envelope, and QR data) Elements. Then canonicalizes the XML to c14n.
@@ -92,7 +95,7 @@ export const getCertificateInfo = (certificate_string: string): {hash: string, i
     const wrapped_certificate_string: string = `-----BEGIN CERTIFICATE-----\n${cleanedup_certificate_string}\n-----END CERTIFICATE-----`;
 
     const hash = getCertificateHash(cleanedup_certificate_string);
-    const x509 = new X509Certificate(wrapped_certificate_string);  
+    const x509Cert = new x509.X509Certificate(wrapped_certificate_string);
 
     // Signature, and public key extraction from x509 PEM certificate (asn1 rfc5280) 
     // Crypto module does not have those functionalities so i'm the crypto boy now :(
@@ -105,8 +108,8 @@ export const getCertificateInfo = (certificate_string: string): {hash: string, i
 
     return {
         hash: hash,
-        issuer: x509.issuer.split("\n").reverse().join(", "),
-        serial_number: BigInt(`0x${x509.serialNumber}`).toString(10),
+        issuer: x509Cert.issuer.split("\n").reverse().join(", "),
+        serial_number: BigInt(`0x${x509Cert.serialNumber}`).toString(10),
         public_key: cert.publicKeyRaw,
         signature: cert.signature
     };
