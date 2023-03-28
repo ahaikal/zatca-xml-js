@@ -59,6 +59,7 @@ const OpenSSL = (cmd: string[]): Promise<string> => {
     //         reject(error);
     //     }
     // });
+    return '';
 }
 
 // Generate a secp256k1 key pair
@@ -74,6 +75,7 @@ const generateSecp256k1KeyPair = async (): Promise<string> => {
     // } catch (error) {
     //     throw error;
     // }
+    return '';
 }
 
 // WE WILL NOT GENERATE CSR ON TABLET
