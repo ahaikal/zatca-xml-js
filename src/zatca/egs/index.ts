@@ -42,38 +42,38 @@ export interface EGSUnitInfo {
 }
 
 const OpenSSL = (cmd: string[]): Promise<string> => {
-    return new Promise<string>((resolve, reject) => {
-        try {
-            const command = spawn("openssl", cmd);
-            let result = "";
-            command.stdout.on("data", (data) => {
-                 result += data.toString();
-            });
-            command.on("close", (code: number) => {
-                return resolve(result);
-            });
-            command.on("error", (error: any) => {
-                return reject(error);
-            });
-        } catch (error: any) {
-            reject(error);
-        }
-    });
+    // return new Promise<string>((resolve, reject) => {
+    //     try {
+    //         const command = spawn("openssl", cmd);
+    //         let result = "";
+    //         command.stdout.on("data", (data) => {
+    //              result += data.toString();
+    //         });
+    //         command.on("close", (code: number) => {
+    //             return resolve(result);
+    //         });
+    //         command.on("error", (error: any) => {
+    //             return reject(error);
+    //         });
+    //     } catch (error: any) {
+    //         reject(error);
+    //     }
+    // });
 }
 
 // Generate a secp256k1 key pair
 // https://techdocs.akamai.com/iot-token-access-control/docs/generate-ecdsa-keys
 // openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem
 const generateSecp256k1KeyPair = async (): Promise<string> => {
-    try {
-        const result = await OpenSSL(["ecparam", "-name", "secp256k1", "-genkey"]);
-        if (!result.includes("-----BEGIN EC PRIVATE KEY-----")) throw new Error("Error no private key found in OpenSSL output.");
+    // try {
+    //     const result = await OpenSSL(["ecparam", "-name", "secp256k1", "-genkey"]);
+    //     if (!result.includes("-----BEGIN EC PRIVATE KEY-----")) throw new Error("Error no private key found in OpenSSL output.");
 
-        let private_key: string = `-----BEGIN EC PRIVATE KEY-----${result.split("-----BEGIN EC PRIVATE KEY-----")[1]}`.trim();
-        return private_key;
-    } catch (error) {
-        throw error;
-    }
+    //     let private_key: string = `-----BEGIN EC PRIVATE KEY-----${result.split("-----BEGIN EC PRIVATE KEY-----")[1]}`.trim();
+    //     return private_key;
+    // } catch (error) {
+    //     throw error;
+    // }
 }
 
 // WE WILL NOT GENERATE CSR ON TABLET
