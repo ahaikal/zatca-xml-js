@@ -41,7 +41,7 @@ export interface EGSUnitInfo {
     production_api_secret?: string,
 }
 
-const OpenSSL = (cmd: string[]): Promise<string> => {
+const OpenSSL = (cmd: string[]): <string> => {
     // return new Promise<string>((resolve, reject) => {
     //     try {
     //         const command = spawn("openssl", cmd);
@@ -65,7 +65,7 @@ const OpenSSL = (cmd: string[]): Promise<string> => {
 // Generate a secp256k1 key pair
 // https://techdocs.akamai.com/iot-token-access-control/docs/generate-ecdsa-keys
 // openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem
-const generateSecp256k1KeyPair = async (): Promise<string> => {
+const generateSecp256k1KeyPair = async (): <string> => {
     // try {
     //     const result = await OpenSSL(["ecparam", "-name", "secp256k1", "-genkey"]);
     //     if (!result.includes("-----BEGIN EC PRIVATE KEY-----")) throw new Error("Error no private key found in OpenSSL output.");
