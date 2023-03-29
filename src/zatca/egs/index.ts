@@ -41,26 +41,26 @@ export interface EGSUnitInfo {
     production_api_secret?: string,
 }
 
-const OpenSSL = (cmd: string[]): <string> => {
-    // return new Promise<string>((resolve, reject) => {
-    //     try {
-    //         const command = spawn("openssl", cmd);
-    //         let result = "";
-    //         command.stdout.on("data", (data) => {
-    //              result += data.toString();
-    //         });
-    //         command.on("close", (code: number) => {
-    //             return resolve(result);
-    //         });
-    //         command.on("error", (error: any) => {
-    //             return reject(error);
-    //         });
-    //     } catch (error: any) {
-    //         reject(error);
-    //     }
-    // });
-    return '';
-}
+// const OpenSSL = (cmd: string[]): <string> => {
+//     // return new Promise<string>((resolve, reject) => {
+//     //     try {
+//     //         const command = spawn("openssl", cmd);
+//     //         let result = "";
+//     //         command.stdout.on("data", (data) => {
+//     //              result += data.toString();
+//     //         });
+//     //         command.on("close", (code: number) => {
+//     //             return resolve(result);
+//     //         });
+//     //         command.on("error", (error: any) => {
+//     //             return reject(error);
+//     //         });
+//     //     } catch (error: any) {
+//     //         reject(error);
+//     //     }
+//     // });
+//     return '';
+// }
 
 // Generate a secp256k1 key pair
 // https://techdocs.akamai.com/iot-token-access-control/docs/generate-ecdsa-keys
@@ -75,7 +75,7 @@ const generateSecp256k1KeyPair = async (): <string> => {
     // } catch (error) {
     //     throw error;
     // }
-    return '';
+    return 'not implemented'
 }
 
 // WE WILL NOT GENERATE CSR ON TABLET
