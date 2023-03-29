@@ -65,7 +65,7 @@ export interface EGSUnitInfo {
 // Generate a secp256k1 key pair
 // https://techdocs.akamai.com/iot-token-access-control/docs/generate-ecdsa-keys
 // openssl ecparam -name secp256k1 -genkey -noout -out ec-secp256k1-priv-key.pem
-const generateSecp256k1KeyPair = async (): <string> => {
+const generateSecp256k1KeyPair = async (): Promise<string> => {
     // try {
     //     const result = await OpenSSL(["ecparam", "-name", "secp256k1", "-genkey"]);
     //     if (!result.includes("-----BEGIN EC PRIVATE KEY-----")) throw new Error("Error no private key found in OpenSSL output.");
@@ -75,7 +75,7 @@ const generateSecp256k1KeyPair = async (): <string> => {
     // } catch (error) {
     //     throw error;
     // }
-    return 'not implemented'
+    return 'not implemented';
 }
 
 // WE WILL NOT GENERATE CSR ON TABLET
