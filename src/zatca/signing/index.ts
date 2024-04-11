@@ -1,5 +1,5 @@
 import { XmlCanonicalizer } from "xmldsigjs";
-import xmldom from "xmldom";
+const { DOMParser } = require('@xmldom/xmldom')
 import { createHash, createSign, X509Certificate } from "crypto";
 import moment from "moment";
 import {Certificate} from "@fidm/x509";
@@ -26,7 +26,7 @@ export const getPureInvoiceString = (invoice_xml: XMLDocument): string => {
     invoice_copy.delete("Invoice/cac:Signature");
     invoice_copy.delete("Invoice/cac:AdditionalDocumentReference", {"cbc:ID": "QR"});
 
-    const invoice_xml_dom = (new xmldom.DOMParser()).parseFromString(
+    const invoice_xml_dom = (new DOMParser()).parseFromString(
         invoice_copy.toString({no_header: false})
     );
     
